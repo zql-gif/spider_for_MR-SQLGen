@@ -1,0 +1,61 @@
+{
+  "db_id": "aan_1",
+  "tables": [
+    {
+      "name": "Affiliation",
+      "schema": [
+        "affiliation_id:number",
+        "name:text",
+        "address:text"
+      ]
+    },
+    {
+      "name": "Author",
+      "schema": [
+        "author_id:number",
+        "name:text",
+        "email:text"
+      ]
+    },
+    {
+      "name": "Author_list",
+      "schema": [
+        "paper_id:text",
+        "author_id:number",
+        "affiliation_id:number"
+      ]
+    },
+    {
+      "name": "Citation",
+      "schema": [
+        "paper_id:text",
+        "cited_paper_id:text"
+      ]
+    },
+    {
+      "name": "Paper",
+      "schema": [
+        "paper_id:text",
+        "title:text",
+        "venue:text",
+        "year:number"
+      ]
+    }
+  ],
+  "question": "What is the venue with the least number of publications?",
+  "query": "SELECT venue FROM paper GROUP BY venue ORDER BY count(*) LIMIT 1",
+  "predict": "SELECT venue, COUNT(*) AS num_publications FROM Paper GROUP BY venue ORDER BY num_publications ASC LIMIT 1;",
+  "gold_exec_result": {
+    "result": "None",
+    "exec_time": 0,
+    "error_message": "(sqlite3.OperationalError) no such table: paper\n[SQL: SELECT venue FROM paper GROUP BY venue ORDER BY count(*) LIMIT 1]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+    "exec_able": false
+  },
+  "predict_exec_result": {
+    "result": "None",
+    "exec_time": 0,
+    "error_message": "(sqlite3.OperationalError) no such table: Paper\n[SQL: SELECT venue, COUNT(*) AS num_publications FROM Paper GROUP BY venue ORDER BY num_publications ASC LIMIT 1;]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)",
+    "exec_able": false
+  },
+  "exec_acc": true
+}
