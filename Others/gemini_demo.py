@@ -11,7 +11,7 @@ from IPython.display import Markdown
 import os
 # Or use `os.getenv('GOOGLE_API_KEY')` to fetch an environment variable.
 # GOOGLE_API_KEY=userdata.get('GOOGLE_API_KEY')
-GEMINI_API_KEY = "AIzaSyCrZ78WRrEoSUdSVJUI6w30igDWusbQ9mE"
+GEMINI_API_KEY = ""
 genai.configure(api_key=GEMINI_API_KEY, transport="rest")  # 修改这里，加一个 transport="rest"
 
 """
