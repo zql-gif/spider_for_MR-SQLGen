@@ -698,6 +698,7 @@ def evaluate(model, exp_id, gold, predict, acc, db_dir, etype, kmaps):
         info_llm = json.loads(lines_llm[CNT])
 
         merged_eval_result = {
+            "id": info["id"],
             "db_id":info["db_id"],
             "tables":load_database_table_schema(info["db_id"]),
             "question":info["question"],

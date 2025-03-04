@@ -216,19 +216,28 @@ def zhipu_text_to_sql_process(gold_input_json, gold_tables_json, test_cnt, model
     else:
         finished_cnt = 0
 
+    # 为每个content的元素添加独立id
+    for index in range(len(contents)):
+        # 先构造一个新的字典，把 "id" 放在最前面
+        new_data = {"id": index, **contents[index]}  # **data 展开原来的字典
+        contents[index] = new_data
+
+
     chat = ZhipuAI(api_key=llm_key)  # 请填写您自己的APIKey
 
     while finished_cnt < test_cnt and finished_cnt < len(contents):
         print("text-to-sql task: " + str(finished_cnt))
         # response = zhipu_text_to_sql_agent(chat, model, temperature, contents[finished_cnt], gold_tables_file)
+
         response = zhipu_text_to_sql_agent_DAIL_SQL(chat, temperature, model, llm_key, contents[finished_cnt])
         print(response)
+        new_response = {"id": finished_cnt, **response}
         with open(gold_file_output, "a", encoding="utf-8") as w:
             w.write(contents[finished_cnt]["query"]+"\t"+contents[finished_cnt]["db_id"]+"\n")
         with open(predicted_file, "a", encoding="utf-8") as w:
-            w.write(response["sql"]+"\n")
+            w.write(new_response["sql"]+"\n")
         with open(response_file, "a", encoding="utf-8") as w:
-            json.dump(response, w)
+            json.dump(new_response, w)
             w.write("\n")
         with open(detailed_gold_info_file, "a", encoding="utf-8") as w:
             json.dump(contents[finished_cnt], w)
